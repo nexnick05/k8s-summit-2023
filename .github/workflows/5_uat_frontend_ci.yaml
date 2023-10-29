@@ -8,7 +8,7 @@ on:
       - 'frontend/**'
 
 env:
-  IMAGE_NAME: yjring/vote-ui
+  IMAGE_NAME: nexnick05/vote-ui
   DOCKER_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
   ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +49,7 @@ jobs:
         context: frontend/
         dockerfile: Dockerfile
         push: true
-        platforms: linux/amd64,linux/arm64
+        platforms: linux/amd64
         tags: ${{ env.IMAGE_NAME }}:${{ steps.extract_version.outputs.VERSION }}
 
     - name: Update Kubernetes deployment
