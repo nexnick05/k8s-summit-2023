@@ -3,14 +3,14 @@ $OrigStr = "yjring"
 
 # 讀取 env.yaml，並存入相應變數
 $envContent = Get-Content -Path env.yaml
-$DOCKER_ACCOUNT = ($envContent -match "dockerAccount:\s*([\S]+)") ? $matches[1] : $null
-$OS_ARCH = ($envContent -match "os:\s*([\S]+)") ? $matches[1] : $null
+$DOCKER_ACCOUNT = $envContent | Select-String "dockerAccount:\s*([\S]+)" | ForEach-Object { $_.Matches.Groups[1].Value }
+$OS_ARCH = $envContent | Select-String "os:\s*([\S]+)" | ForEach-Object { $_.Matches.Groups[1].Value }
 
 switch ($OS_ARCH) {
-    "arm", "arm64" {
+    {"arm", "arm64"} {
         $PLATFORMS = "linux/arm64"
     }
-    "amd", "amd64" {
+    {"amd", "amd64"} {
         $PLATFORMS = "linux/amd64"
     }
     default {
